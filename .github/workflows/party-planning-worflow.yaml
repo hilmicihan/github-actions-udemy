@@ -1,0 +1,27 @@
+name: Party Planning Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  decorations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hang up streamers
+        run: echo "Hanging up streamers"
+      - name: Blow up balloons
+        run: echo "Blowing up balloons"
+      - name: Arrange centerpieces
+        run: echo "Arranging centerpieces"
+
+  food:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Shop for groceries
+        run: echo "Shopping for groceries"
+      - name: Cook main dishes
+        run: echo "Cooking main dishes"
+      - name: Set up buffet table
+        run: echo "Setting up buffet table"
