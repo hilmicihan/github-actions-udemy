@@ -1,0 +1,11 @@
+name: Hello World #The name of the workflow
+
+on: [push] # The event that triggers the workflow. In this case, the workflow is triggered when code is pushed to the repository.
+
+jobs:
+  build:
+    runs-on: ubuntu-lates # The operating system environment that the job runs on. In this case, the job runs on the latest version of Ubuntu.
+
+    steps:
+      - name: Say Hello # The name of the step, which is just for readability and doesn't affect the execution of the workflow.
+        run: echo "Hello, World!" # The command that is executed as part of the step. In this case, the command is `echo "Hello, World!"`, which prints the message "Hello, World!" to the console.
