@@ -1,0 +1,44 @@
+# .NET Core
+## Build artifacts
+*.o
+*.obj
+bin/
+obj/
+
+## .NET Core
+*.csproj.user
+project.lock.json
+.project.json
+obj/
+
+## Visual Studio
+*.user
+*.ncb
+*.suo
+*.vspscc
+*.vssscc
+*.VC.db
+*.VC.VC.opendb
+*.sln.docstates
+*.sln.ide
+
+## Test Results
+TestResults/
+
+## MSTest
+*.trx
+
+## VS Code
+.vscode/
+
+## Resharper
+_ReSharper*/
+
+## Others
+_ReSharper*/
+*.dotCover
+*.html
+.coverage
+.vs
+wwwroot/lib/
+*.swp
