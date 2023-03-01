@@ -1,0 +1,26 @@
+---
+tags:
+  - Users
+summary: Get a specific user by ID
+parameters:
+  - name: user_id
+    in: path
+    type: integer
+    required: true
+responses:
+  200:
+    description: The requested user
+    schema:
+      $ref: '#/definitions/User'
+  404:
+    description: User not found
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      age:
+        type: integer

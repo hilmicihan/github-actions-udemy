@@ -1,6 +1,10 @@
 name: Python CI
 
-on: [push]
+on: 
+  pull_request:
+    branches:
+      - python
+    types: [opened,synchronize]
 
 jobs: 
   build:

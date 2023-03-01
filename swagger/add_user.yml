@@ -1,0 +1,22 @@
+---
+tags:
+  - Users
+summary: Add a new user
+parameters:
+  - in: body
+    name: user
+    schema:
+      $ref: '#/definitions/User'
+responses:
+  201:
+    description: The newly created user
+    schema:
+      $ref: '#/definitions/User'
+definitions:
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: integer
