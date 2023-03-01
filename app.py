@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
+from flasgger import Swagger, swag_from
 
 app = Flask(__name__)
+swagger = Swagger(app)
 
 # Sample data for testing
 data = {
@@ -11,13 +13,13 @@ data = {
     ]
 }
 
-# Endpoint to get all users
-@app.route('/api/users')
+@app.route('/api/users', methods=['GET'])
+@swag_from('swagger/get_users.yml')
 def get_users():
     return jsonify(data['users'])
 
-# Endpoint to get a specific user by ID
-@app.route('/api/users/<int:user_id>')
+@app.route('/api/users/<int:user_id>', methods=['GET'])
+@swag_from('swagger/get_user.yml')
 def get_user(user_id):
     user = next((u for u in data['users'] if u['id'] == user_id), None)
     if user:
@@ -25,8 +27,8 @@ def get_user(user_id):
     else:
         return jsonify({'error': 'User not found'}), 404
 
-# Endpoint to add a new user
 @app.route('/api/users', methods=['POST'])
+@swag_from('swagger/add_user.yml')
 def add_user():
     new_user = request.json
     new_user['id'] = max(u['id'] for u in data['users']) + 1
