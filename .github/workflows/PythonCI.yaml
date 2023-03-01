@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - python
-    types: [ready_for_review]
+    types: [opened,synchronize]
 
 jobs: 
   build:
