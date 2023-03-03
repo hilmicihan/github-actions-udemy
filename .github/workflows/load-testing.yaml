@@ -1,0 +1,14 @@
+name: Load Testing Workflow
+on:
+  push:
+  
+jobs:
+  load_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Run Load Test
+        run: locust -f load_test.py --headless --users=50 --spawn-rate=10 --host https://jsonplaceholder.typicode.com --run-time=2s
