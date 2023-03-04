@@ -1,0 +1,34 @@
+name: Backup files
+
+on: 
+  schedule:
+    - cron: '0 0 * * *' # Run ever day at midnight. 
+# -    -    -    -    -
+# |    |    |    |    |
+#  |    |    |    |    +----- day of the week (0 - 6) (Sunday is 0 or 7)
+#  |    |    |    +---------- month (1 - 12)
+#  |    |    +--------------- day of the month (1 - 31)
+#  |    +-------------------- hour (0 - 23)
+#  +------------------------- minute (0 - 59)
+jobs:
+  backup:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout Code
+    uses: actions/checkout@v2
+  - name: Create backup
+    run: |
+      tar -czvf backup.tar.gz /path/to/files
+  - name: Upload Backup
+    uses: actions/upload-artifact@v2
+    with:
+      name: backup
+      path: backup.tar.gz
+  - name: Copy Backup to remote location
+    uses: appleboy/scp-action@master
+    with:
+      host: ${{secrets.REMOTE_HOST }}
+      username:  ${{secrets.ROMETO_USERNAME }}
+      password: ${{secrets.REMOTE_PASSWORD }}
+      source: backup.tar.gz
+      target: /path/to/remote/location

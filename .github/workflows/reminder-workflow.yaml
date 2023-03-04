@@ -1,0 +1,35 @@
+name: Code Review Reminder
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run every day at midnight
+  push:
+
+jobs:
+  code-review-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Get pull requests
+        id: list_prs
+        run: |
+          prs=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open" | jq -r '.[] | select(.assignees[].login == "'"$GITHUB_ACTOR"'") | .number')
+          echo "::set-output name=prs::$prs"
+      - name: Send reminders
+        if: steps.list_prs.outputs.prs != ''
+        run: |
+          prs=${{ steps.list_prs.outputs.prs }}
+          for pr in $prs; do
+            assignees=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${pr}/assignees" | jq -r '.[].login')
+            for assignee in $assignees; do
+              if [ "$assignee" = "$GITHUB_ACTOR" ]; then
+                curl -X POST -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+                  -H "Accept: application/vnd.github.v3+json" \
+                  -d '{"body": "Reminder: please review your assigned pull request #'"$pr"'."}' \
+                  "https://api.github.com/repos/${{ github.repository }}/issues/${pr}/comments"
+              fi
+            done
+          done
