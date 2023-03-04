@@ -2,7 +2,7 @@ name: Code Review Reminder
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Run every day at midnight  
+    - cron: '0 0 * * *' # Run every day at midnight
   push:
 jobs:
   code-review-reminder:
