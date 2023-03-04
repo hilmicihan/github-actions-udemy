@@ -10,20 +10,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: List pull requests
+      - name: Get pull requests
         id: list_prs
-        uses: peter-evans/list-prs@v2.4.0
-        with:
-          repository: hilmicihan/github-actions-udemy
-          sort: updated-desc
-          token: ${{ secrets.TOKEN }}
-      - name: Send reminders
-        if: steps.list_prs.outputs.prs != '[]'
         run: |
-          prs=$(echo ${{ steps.list_prs.outputs.prs }} | jq -r '.[].number')
+          prs=$(curl -s -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open" | jq -r '.[].number')
+          echo "::set-output name=prs::$prs"
+      - name: Send reminders
+        if: steps.list_prs.outputs.prs != ''
+        run: |
+          prs=${{ steps.list_prs.outputs.prs }}
           for pr in $prs; do
-            curl -X POST -H "Authorization: token ${{ secrets.TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{"body": "Reminder: please review pull request #'"$pr"'."}' \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${pr}/comments"
+            curl -X POST -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -d '{"body": "Reminder: please review pull request #'"$pr"'."}' \
+              "https://api.github.com/repos/${{ github.repository }}/issues/${pr}/comments"
           done
