@@ -1,0 +1,28 @@
+name: Code Review Reminder
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run every day at midnight
+  push:
+jobs:
+  code-review-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: List pull requests
+        id: list_prs
+        uses: peter-evans/list-prs@v2.4.0
+        with:
+          sort: updated-desc
+          token: ${{ secrets.TOKEN }}
+      - name: Send reminders
+        if: steps.list_prs.outputs.prs != '[]'
+        run: |
+          prs=$(echo ${{ steps.list_prs.outputs.prs }} | jq -r '.[].number')
+          for pr in $prs; do
+            curl -X POST -H "Authorization: token ${{ secrets.TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"body": "Reminder: please review pull request #'"$pr"'."}' \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${pr}/comments"
+          done
