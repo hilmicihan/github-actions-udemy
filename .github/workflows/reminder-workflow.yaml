@@ -14,6 +14,7 @@ jobs:
         id: list_prs
         uses: peter-evans/list-prs@v2.4.0
         with:
+          repository: hilmicihan/github-actions-udemy
           sort: updated-desc
           token: ${{ secrets.TOKEN }}
       - name: Send reminders
