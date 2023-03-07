@@ -1,8 +1,10 @@
 name: Branch Cleanup
 
-on: 
-  schedule:
-    - cron: "0 0 * * *" # it will trigger every hour 
+on:
+  push:
+    branches: [clean]
+  #schedule:
+   # - cron: "0 0 * * *" # it will trigger every hour 
 
 jobs:
   cleanup:
