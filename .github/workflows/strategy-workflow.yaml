@@ -13,7 +13,6 @@ jobs:
       max-parallel: 2
       timeout-minutes: 20
     runs-on: ${{ matrix.os }}
-    timeout-minutes: ${{ strategy.timeout-minutes }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
