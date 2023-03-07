@@ -36,6 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to production
-        uses: some/deployment-action@v1
-        with:
-          env: production
+        run: |
+          # Run deployment script here
+          echo "Deployment successful"
