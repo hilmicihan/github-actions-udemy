@@ -1,0 +1,46 @@
+name: Resource Optimaziton Workflow
+
+# Define the trigger event for the workflow
+on:
+  push:
+
+jobs:
+  build-and-test:
+   # Define the parallel configuration to test the code
+    strategy:
+     fail-fast: true
+     matrix:
+      os: [ubuntu-latest, macos-latest]
+      python-version: [3.7, 3.8, 3.9]
+     max-parallel: 2
+    # Define the operating system to run the job on
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+       # Step to set up the Python environment
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+        # Step to run the tests
+      - name: Run tests 
+        run: python -m pytest
+
+  deploy:
+     # Define the dependency of the deployment job on the build-and-test job
+     needs: build-and-test
+
+     runs-on: ubuntu-latest
+     steps:
+       # Step to deploy the code to the production environment
+       - name: Deploy to production
+         run: |
+          # Run deployment script here
+          echo "Deployment Successful"
+        
+
