@@ -27,38 +27,3 @@ python app.py
 8. Test the other API endpoints using a tool like `curl` or a web API testing tool like Postman.
 9. To view the Swagger documentation, navigate to `http://localhost:5000/apidocs` in your web browser.
 10. When you're finished testing the app, stop the Flask development server by pressing `Ctrl + C` in your terminal.
-
-
-## Reusable Worfklows
-
-**Inputs**:
-| ``Name``              | ``Description``                              | ``Required`` | ``Default``         |
-| ------------------|------------------------------------------| ---------|-----------------|
-| python_version     | Python version for the virtual environment| true     | 3.9             |
-| tests_folder       | Location of the test folder               | true     | tests           |
-| requirements_file  | Path to requirements.txt file             | true     | requirements.txt|
-
-```
-name: Example usage of Automated Testing Workflow 🤖🧪
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run Automated Testing Workflow
-        uses: ./.github/workflows/automated_testing_workflow.yml
-        with:
-          python_version: '3.9'
-          tests_folder: 'tests'
-          requirements_file: 'requirements.txt'
-
-
-
-```
