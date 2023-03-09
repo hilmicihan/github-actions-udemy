@@ -31,6 +31,9 @@ python app.py
 
 ### Automated Testing Workflow 🤖🧪
 
+This GitHub workflow is designed to automate testing for Python projects. It sets up a virtual environment with a specified Python version, installs the required dependencies, and runs the tests located in a specified test folder.
+
+
 **Inputs**:
 
 | ``Name``              | ``Description``                              | ``Required`` | ``Default`` |
