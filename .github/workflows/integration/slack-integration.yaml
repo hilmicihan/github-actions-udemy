@@ -1,0 +1,44 @@
+
+################################################################
+# Make sure to replace the SLACK_CHANNEL and SLACK_WEBHOOK variables with your own values.
+# Links
+# https://github.com/rtCamp/action-slack-notify
+# https://api.slack.com/workflows
+################################################################
+name: Notify Slack of Build and Deployment Status
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the code
+      - uses: actions/checkout@v2
+
+      # Set up your build steps here
+
+      # Deploy the code to production
+      - name: Deploy to Production
+        run: |
+          # Run your deployment commands here
+          echo "Deployment Successful!"
+
+      # Send a notification to Slack
+      - name: Send Notification to Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          # Specify the Slack channel to notify
+          SLACK_CHANNEL: '#my-channel'
+          # Set an emoji icon for the notification
+          SLACK_ICON_EMOJI: ':rocket:'
+          # Specify the username for the notification
+          SLACK_USERNAME: 'GitHub Actions'
+          # Set the message to include in the notification
+          SLACK_MESSAGE: 'Build and deployment successful!'
+          # Use a secret to store the Slack webhook URL
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} # Use a secret to store the Slack webhook URL for security purposes
+
