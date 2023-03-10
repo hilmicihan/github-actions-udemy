@@ -1,0 +1,42 @@
+name: Build and push Docker image 🐳
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: my-docker-image 🖼️
+  DOCKER_REGISTRY: my-container-registry.azurecr.io 🌐
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} 👤
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 🔒
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 🐧
+    steps:
+      - name: Checkout code 🛒
+        uses: actions/checkout@v2
+
+      - name: Build Docker image 🏗️
+        run: docker build -t $IMAGE_NAME .
+
+      - name: Login to Docker registry 🔑
+        run: docker login $DOCKER_REGISTRY -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Push Docker image 🚀
+        run: docker push $DOCKER_REGISTRY/$IMAGE_NAME
+
+      - name: Send Notification to Slack 📩
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          # Specify the Slack channel to notify
+          SLACK_CHANNEL: '#my-channel'
+          # Set an emoji icon for the notification
+          SLACK_ICON_EMOJI: ':rocket:'
+          # Specify the username for the notification
+          SLACK_USERNAME: 'GitHub Actions'
+          # Set the message to include in the notification
+          SLACK_MESSAGE: 'Docker image build and push successful!'
+          # Use a secret to store the Slack webhook URL
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} # Use a secret to store the Slack webhook URL for security purposes 🤫
