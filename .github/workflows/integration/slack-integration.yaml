@@ -28,7 +28,7 @@ jobs:
           echo "Deployment Successful!"
 
       # Send a notification to Slack
-      - name: Send Notification to Slack
+      - name: Send Notification to Slack 📩
         uses: rtCamp/action-slack-notify@v2
         env:
           # Specify the Slack channel to notify
@@ -40,5 +40,5 @@ jobs:
           # Set the message to include in the notification
           SLACK_MESSAGE: 'Build and deployment successful!'
           # Use a secret to store the Slack webhook URL
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} # Use a secret to store the Slack webhook URL for security purposes
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} # Use a secret to store the Slack webhook URL for security purposes 🤫
 
