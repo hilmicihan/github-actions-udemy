@@ -1,0 +1,56 @@
+name: Python Code Fun
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  write-python-code:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Get excited about writing Python code!
+      - name: Get excited
+        run: |
+          echo "Get ready to write some awesome Python code!"
+          sleep 3
+          echo "Woo hoo!"
+          sleep 2
+          echo "Let's do this!"
+
+      # Step 3: Show off some Python code examples
+      - name: Show off some code examples
+        run: |
+          echo "Check out this cool Python code:"
+          echo "print('Hello, World!')"
+          echo "x = 5"
+          echo "y = 10"
+          echo "print(x + y)"
+          echo "print('Python is the best!')"
+
+      # Step 4: Let's write some code!
+      - name: Write Python code
+        run: |
+          echo "Now it's your turn to write some Python code!"
+          sleep 2
+          echo "Type in your code below:"
+          read -r code
+          echo "Your code:"
+          echo "$code" > code.py
+          sleep 1
+          echo "Running your code..."
+          python code.py
+
+      # Step 5: Have some fun with Python code!
+      - name: Have fun with Python
+        run: |
+          echo "Python is not just for serious coding!"
+          echo "Check out these fun things you can do with Python:"
+          echo "print('Python rocks!') # Simple but effective"
+          echo "import this # The Zen of Python"
+          echo "from __future__ import braces # A joke that only Pythonistas will get"
+          echo "import antigravity # The best way to fly"
